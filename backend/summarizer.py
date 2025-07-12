@@ -41,7 +41,7 @@ def extract_highlights(video_path, scenes, max_highlights=5):
 
     for i, (start_time, end_time) in enumerate(highlights):
         start_sec = start_time.get_seconds()
-        end_sec = min(start_sec + HIGHLIGHT_DURATION, clip.duration)
+        end_sec = end_time.get_seconds()
 
         subclip = clip.subclipped(start_sec, end_sec)
         out_file = os.path.join(OUTPUT_PATH, f"{filename}_highlight_{i+1}.mp4")
