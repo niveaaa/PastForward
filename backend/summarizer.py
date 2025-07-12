@@ -30,7 +30,7 @@ def detect_scenes(video_path):
     return scene_list
 
 
-def extract_highlights(video_path, scenes, max_highlights=5):
+def extract_highlights(video_path, scenes, max_highlights=15):
     print("Extracting highlight clips...")
 
     filename = os.path.splitext(os.path.basename(video_path))[0]
@@ -43,11 +43,16 @@ def extract_highlights(video_path, scenes, max_highlights=5):
         start_sec = start_time.get_seconds()
         end_sec = end_time.get_seconds()
 
-        subclip = clip.subclipped(start_sec, end_sec)
+        # ✅ Skip very short scenes (e.g., under 2 seconds)
+        if (end_sec - start_sec) < 4:
+            continue
+
+        subclip = clip.subclip(start_sec, end_sec)
         out_file = os.path.join(OUTPUT_PATH, f"{filename}_highlight_{i+1}.mp4")
-        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", logger=None)
+        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", verbose=False, logger=None)
 
         print(f"Saved: {out_file}")
+
 
 
 def summarize(video_file):
