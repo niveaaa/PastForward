@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Node
+node_modules/
+dist/
+
+# Vite build
+frontend/dist/
+
+# Video data
+data/input/*
+data/output/*
+
+# Mac / system
+.DS_Store
