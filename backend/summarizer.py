@@ -7,6 +7,8 @@ from moviepy.video.VideoClip import TextClip, ImageClip
 from moviepy.video.compositing import CompositeVideoClip
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
+from moviepy import concatenate_videoclips
+
 INPUT_PATH = "data/input/"
 OUTPUT_PATH = "data/output/"
 HIGHLIGHT_DURATION = 10  # seconds to extract from start of each scene
@@ -30,7 +32,7 @@ def detect_scenes(video_path):
     return scene_list
 
 
-def extract_highlights(video_path, scenes, max_highlights=15):
+def extract_highlights(video_path, scenes, max_highlights=20):
     print("Extracting highlight clips...")
 
     filename = os.path.splitext(os.path.basename(video_path))[0]
@@ -47,12 +49,36 @@ def extract_highlights(video_path, scenes, max_highlights=15):
         if (end_sec - start_sec) < 4:
             continue
 
-        subclip = clip.subclip(start_sec, end_sec)
+        subclip = clip.subclipped(start_sec, end_sec)
         out_file = os.path.join(OUTPUT_PATH, f"{filename}_highlight_{i+1}.mp4")
-        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", verbose=False, logger=None)
+        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", logger=None)
 
         print(f"Saved: {out_file}")
 
+    final_clips = []
+
+    for i, (start_time, end_time) in enumerate(highlights):
+        start_sec = start_time.get_seconds()
+        end_sec = end_time.get_seconds()
+
+        if (end_sec - start_sec) < 2:
+            continue
+
+        subclip = clip.subclipped(start_sec, end_sec)
+        final_clips.append(subclip)
+
+        # (Optional) still save individual clips:
+        out_file = os.path.join(OUTPUT_PATH, f"{filename}_highlight_{i+1}.mp4")
+        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", logger=None)
+
+        print(f"Saved: {out_file}")
+
+    if final_clips:
+        combined = concatenate_videoclips(final_clips)
+        combined_file = os.path.join(OUTPUT_PATH, f"{filename}_highlight_final.mp4")
+        combined.write_videofile(combined_file, codec="libx264", audio_codec="aac")
+
+        print(f"\n🎞️ Final combined highlight saved as: {combined_file}")
 
 
 def summarize(video_file):
