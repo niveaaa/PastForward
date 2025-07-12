@@ -1,12 +1,15 @@
 import os
 import cv2
 from scenedetect import VideoManager, SceneManager
-from scenedetect.detectors import ContentDetector
-from moviepy.editor import VideoFileClip
+from scenedetect.detectors import ContentDetector   
+
+from moviepy.video.VideoClip import TextClip, ImageClip  
+from moviepy.video.compositing import CompositeVideoClip
+from moviepy.video.io.VideoFileClip import VideoFileClip
 
 INPUT_PATH = "data/input/"
 OUTPUT_PATH = "data/output/"
-HIGHLIGHT_DURATION = 5  # seconds to extract from start of each scene
+HIGHLIGHT_DURATION = 10  # seconds to extract from start of each scene
 
 
 def detect_scenes(video_path):
@@ -14,7 +17,7 @@ def detect_scenes(video_path):
 
     video_manager = VideoManager([video_path])
     scene_manager = SceneManager()
-    scene_manager.add_detector(ContentDetector(threshold=30.0))  # adjustable
+    scene_manager.add_detector(ContentDetector(threshold=45.0))  # adjustable
 
     video_manager.set_downscale_factor()
     video_manager.start()
@@ -40,9 +43,9 @@ def extract_highlights(video_path, scenes, max_highlights=5):
         start_sec = start_time.get_seconds()
         end_sec = min(start_sec + HIGHLIGHT_DURATION, clip.duration)
 
-        subclip = clip.subclip(start_sec, end_sec)
+        subclip = clip.subclipped(start_sec, end_sec)
         out_file = os.path.join(OUTPUT_PATH, f"{filename}_highlight_{i+1}.mp4")
-        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", verbose=False, logger=None)
+        subclip.write_videofile(out_file, codec="libx264", audio_codec="aac", logger=None)
 
         print(f"Saved: {out_file}")
 
@@ -54,5 +57,5 @@ def summarize(video_file):
 
 
 if __name__ == "__main__":
-    test_file = "test_video.mp4"  # Put your sample video here
+    test_file = "videoplayback.mp4"  # Put your sample video here
     summarize(test_file)
