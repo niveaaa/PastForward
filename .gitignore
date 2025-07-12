@@ -1,18 +1,19 @@
+# .gitignore
+
 # Python
+venv/
 __pycache__/
 *.pyc
-.env
 
-# Node
+# Node (frontend)
 node_modules/
 dist/
 
-# Vite build
-frontend/dist/
-
-# Video data
-data/input/*
-data/output/*
-
-# Mac / system
+# Build & IDE
+*.log
+*.env
 .DS_Store
+
+# Media output
+data/output/
+data/input/*
