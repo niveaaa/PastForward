@@ -79,5 +79,16 @@ npm install
 npm run dev
 ```
 
+---
 
+## 🧪 Upcoming Features
+
+- Upload and summarize personal videos
+- Scene timeline & chapter scrubber
+- Export edited clip with VHS timestamp
+- Voice-command navigation
+
+---
+
+### 🧑‍💻 Built With 💙 at OSDHack ‘25
 
