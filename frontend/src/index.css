@@ -16,3 +16,13 @@ body,
   justify-content: center;
   align-items: center;
 }
+
+body {
+  background: url(../public/assets/tv6.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#root{
+  transform: scale(1.7,2.3);
+}
