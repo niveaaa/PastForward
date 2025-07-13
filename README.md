@@ -55,7 +55,11 @@ PastForward/
 ```bash
 git clone https://github.com/niveaaa/PastForward.git
 cd PastForward
+```
 
+### 2. Backend Setup
+
+```bash
 cd backend
 python -m venv venv
 # Windows
@@ -65,4 +69,15 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 python summarizer.py
+```
+
+### 3. Frontend Setup
+
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+
+
 
