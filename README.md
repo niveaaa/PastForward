@@ -27,27 +27,6 @@
 
 ---
 
-## 📁 Folder Structure
-
-PastForward/
-├── backend/
-│ └── summarizer.py
-├── frontend/
-│ ├── index.html
-│ ├── src/
-│ │ ├── App.jsx
-│ │ ├── main.jsx
-│ │ ├── index.css
-│ │ └── components/
-│ │ └── VCRPlayer.jsx
-│ └── public/assets/
-│ └── highlight_final.mp4
-├── .gitignore
-└── README.md
-
-
----
-
 ## ▶️ Getting Started
 
 ### 1. Clone the Repo
