@@ -1,0 +1,56 @@
+/* src/crt.css */
+
+.crt {
+  position: relative;
+  background-color: black;
+  overflow: hidden;
+}
+
+.crt::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  z-index: 10;
+  mix-blend-mode: screen;
+  opacity: 0.3;
+}
+
+.crt::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 70%
+  );
+  z-index: 11;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.98;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.crt {
+  animation: flicker 1.5s infinite alternate;
+}
